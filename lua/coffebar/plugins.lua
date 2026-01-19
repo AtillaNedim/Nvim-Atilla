@@ -147,7 +147,16 @@ return {
   -- automatically close pairs such as (), {}, ""
   { "cohama/lexima.vim", priority = 2, enabled = false },
   -- treesitter
-  { "nvim-treesitter/nvim-treesitter", branch = "master", lazy = false, build = ":TSUpdate" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    lazy = false,
+    build = ":TSUpdate",
+    opts = require("coffebar.plugins.nvim-treesitter"),
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
   -- python venv manager
   { "HallerPatrick/py_lsp.nvim", priority = 2 },
   -- keep visible current function declaration
@@ -258,6 +267,14 @@ return {
   },
   -- snippets
   { "rafamadriz/friendly-snippets" },
+  -- Java LSP support (Spring Boot, Maven, Gradle)
+  {
+    "mfussenegger/nvim-jdtls",
+    ft = { "java" },
+    config = function()
+      require("coffebar.plugins.java").setup()
+    end,
+  },
   -- generic way to handle build/run/test/deploy tasks
   {
     "skywind3000/asynctasks.vim",
